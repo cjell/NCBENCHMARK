@@ -79,7 +79,7 @@ def run_anomaly_detection(csv_path, threshold, output_path, split_by, target_yea
             else:
                 current_val = None
 
-            # Gather historical data (for years < target_year) for same municipality and category
+            # Gather historical data (years < target_year) for same municipality and category
             hist_rows = df_detection.loc[
                 (df_detection[year_col] < current_year) &
                 (df_detection[muni_col] == raw_muni) &
@@ -113,7 +113,7 @@ def run_anomaly_detection(csv_path, threshold, output_path, split_by, target_yea
                                   raw_year, raw_muni, raw_category, metric, hist_comment))
 
     # Build dictionaries (keyed by (municipality, category, metric)) for highlighting.
-    # Build dictionarie for anomalies.
+    # Build dictionary for anomalies.
     anomaly_dict = {}
     for anomaly in anomalies:
         _, _, current_val, mean, std_dev, z_score, year, muni, category, metric, hist_comment = anomaly
@@ -125,7 +125,7 @@ def run_anomaly_detection(csv_path, threshold, output_path, split_by, target_yea
             f"Std Dev: {std_dev:.2f}\nZ-Score: {z_score:.2f}\nHistorical Data:\n{hist_comment}"
         )
         
-    # Build dictionaries for missing data.
+    # Build dictionary for missing data.
     missing_dict = {}
     for m in missing_data:
         _, _, year, muni, category, metric, hist_comment = m
@@ -136,7 +136,7 @@ def run_anomaly_detection(csv_path, threshold, output_path, split_by, target_yea
             f"Metric: {metric_note}\nHistorical Data:\n{hist_comment}"
         )
         
-    # Build dictionarie for non-numeric data.
+    # Build dictionary for non-numeric data.
     non_numeric_dict = {}
     for n in non_numeric:
         _, _, value, year, muni, category, metric = n
@@ -153,7 +153,8 @@ def run_anomaly_detection(csv_path, threshold, output_path, split_by, target_yea
     # Write sheets to Excel.
     transformed_sheet_names = []
     with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
-        # Write transformed data; if split_by is specified, split accordingly.
+        
+        # Write transformed data and split according to split_by parameter.
         if split_by is None or split_by.lower() not in ["municipality", "category"]:
             pivot_df.to_excel(writer, index=False, sheet_name="Transformed Data")
             transformed_sheet_names.append("Transformed Data")

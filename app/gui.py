@@ -21,7 +21,7 @@ class AnomalyDetectorApp:
         main_frame = ttk.Frame(root, padding=40)
         main_frame.pack(expand=True, fill='both')
 
-        # CSV File Selection (No fixed bootstyle so text inherits theme colors)
+        # CSV File Selection (No fixed theme/bootstyle so text inherits theme colors)
         self.csv_label = ttk.Label(main_frame, text="Select CSV File To Analyze:", font=("Helvetica", 18))
         self.csv_label.pack(pady=(20, 5))
         self.csv_entry = ttk.Entry(main_frame, width=100, bootstyle="primary", font=("Helvetica", 16))
@@ -43,7 +43,7 @@ class AnomalyDetectorApp:
         self.year_entry.insert(0, "0000")
         self.year_entry.pack(pady=5)
 
-        # Dividing Sheets Optionn
+        # Dividing Sheets Option
         self.split_label = ttk.Label(main_frame, text="Divide Sheets By:", font=("Helvetica", 18))
         self.split_label.pack(pady=(20, 5))
         self.split_by = tk.StringVar(value="none")  # default is "none"
